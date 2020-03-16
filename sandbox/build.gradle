@@ -1,3 +1,15 @@
 apply plugin: 'java'
 apply plugin: 'application'
 mainClassName = "HomeTask1"
+
+test {
+    useTestNG()
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.testng:testng:7.1.0'
+}
