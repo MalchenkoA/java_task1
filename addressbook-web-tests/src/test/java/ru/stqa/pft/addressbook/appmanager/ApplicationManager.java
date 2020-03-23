@@ -1,18 +1,17 @@
 package ru.stqa.pft.addressbook.appmanager;
 
-import org.openqa.selenium.*;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.concurrent.TimeUnit;
 
-public class ApplicationManager {
+public class ApplicationManager{
   WebDriver wd;
 
   private ContactHelper contactHelper;
   private SessionHelper sessionHelper;
   private NavigationHelper navigationHelper;
   private GroupHelper groupHelper;
-  public boolean acceptNextAlert = true;
 
   public void init() {
     wd = new FirefoxDriver();
@@ -33,21 +32,6 @@ public class ApplicationManager {
     wd.quit();
   }
 
-  public String closeAlertAndGetItsText() {
-    try {
-      Alert alert = wd.switchTo().alert();
-      String alertText = alert.getText();
-      if (acceptNextAlert) {
-        alert.accept();
-      } else {
-        alert.dismiss();
-      }
-      return alertText;
-    } finally {
-      acceptNextAlert = true;
-    }
-  }
-
   public GroupHelper getGroupHelper() {
     return groupHelper;
   }
@@ -59,4 +43,5 @@ public class ApplicationManager {
   public ContactHelper getContactHelper() {
     return contactHelper;
   }
+
 }
