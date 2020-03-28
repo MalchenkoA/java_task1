@@ -5,11 +5,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.stqa.pft.addressbook.model.ContactData;
 
+import static org.openqa.selenium.remote.BrowserType.FIREFOX;
 import static org.testng.Assert.assertTrue;
 
 public class ContactHelper extends HelperBase {
 
-  protected final ApplicationManager app = new ApplicationManager();
+  protected final ApplicationManager app = new ApplicationManager(FIREFOX);
   public boolean acceptNextAlert = true;
 
   public ContactHelper(WebDriver wd) {
