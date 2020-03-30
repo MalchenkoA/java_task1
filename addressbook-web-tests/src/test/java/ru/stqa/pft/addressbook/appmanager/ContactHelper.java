@@ -2,7 +2,6 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import ru.stqa.pft.addressbook.model.ContactData;
 
@@ -23,15 +22,15 @@ public class ContactHelper extends HelperBase {
   }
 
   public void fillContactForm(ContactData contactData) {
-    type(By.name("firstname"),contactData.getFirstname());
-    type(By.name("lastname"),contactData.getLastname());
-    type(By.name("address"),contactData.getAddress());
-    type(By.name("home"),contactData.getHomephone());
-    type(By.name("work"),contactData.getWorkphone());
-    type(By.name("mobile"),contactData.getMobilephone());
-    type(By.name("fax"),contactData.getFaxphone());
-    type(By.name("email"),contactData.getEnail());
-    }
+    type(By.name("firstname"), contactData.getFirstname());
+    type(By.name("lastname"), contactData.getLastname());
+    type(By.name("address"), contactData.getAddress());
+    type(By.name("home"), contactData.getHomephone());
+    type(By.name("work"), contactData.getWorkphone());
+    type(By.name("mobile"), contactData.getMobilephone());
+    type(By.name("fax"), contactData.getFaxphone());
+    type(By.name("email"), contactData.getEnail());
+  }
 
   public void initContactCreation() {
     click(By.linkText("add new"));
@@ -70,5 +69,16 @@ public class ContactHelper extends HelperBase {
     } finally {
       acceptNextAlert = true;
     }
+  }
+
+  public void createContact(ContactData contact) {
+    initContactCreation();
+    fillContactForm(contact);
+    submitContactCreation();
+
+  }
+
+  public boolean isThereAContact() {
+    return isElementPresent(By.name("selected[]"));
   }
 }
