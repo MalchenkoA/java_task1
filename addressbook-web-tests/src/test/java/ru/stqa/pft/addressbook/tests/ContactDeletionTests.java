@@ -1,12 +1,12 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import ru.stqa.pft.addressbook.appmanager.ContactHelper;
 import ru.stqa.pft.addressbook.model.ContactData;
 
-
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class ContactDeletionTests extends TestBase{
 
@@ -23,6 +23,7 @@ public class ContactDeletionTests extends TestBase{
     app.getContactHelper().deleteSelectedContacts();
     app.getContactHelper().closingTheDialogBox();
     app.getNavigationHelper().gotoContactPage();
+    TimeUnit.SECONDS.sleep(5);
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size() - 1);
 
