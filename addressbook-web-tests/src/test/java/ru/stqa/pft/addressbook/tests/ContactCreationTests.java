@@ -20,7 +20,7 @@ public class ContactCreationTests extends TestBase {
     app.getNavigationHelper().gotoContactPage();
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size() + 1);
-    app.logout();
+
 
     contact.setId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
     before.add(contact);
