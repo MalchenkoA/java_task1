@@ -3,40 +3,17 @@ package ru.stqa.pft.addressbook.model;
 import java.util.Objects;
 
 public class ContactData {
-  private int id;
-  private final String firstname;
-  private final String lastname;
-  private final String address;
-  private final String homephone;
-  private final String workphone;
-  private final String mobilephone;
-  private final String faxphone;
-  private final String enail;
-
-  public ContactData(String firstname, String lastname, String address, String homephone, String workphone, String mobilephone, String faxphone, String enail) {
-    this.id = Integer.MAX_VALUE;
-    this.firstname = firstname;
-    this.lastname = lastname;
-    this.address = address;
-    this.homephone = homephone;
-    this.workphone = workphone;
-    this.mobilephone = mobilephone;
-    this.faxphone = faxphone;
-    this.enail = enail;
-  }
+  private int id = Integer.MAX_VALUE;
+  private String firstname;
+  private String lastname;
+  private String address;
+  private String homephone;
+  private String workphone;
+  private String mobilephone;
+  private String faxphone;
+  private String email;
 
 
-  public ContactData(int id, String firstname, String lastname, String address, String homephone, String workphone, String mobilephone, String faxphone, String enail) {
-    this.id = id;
-    this.firstname = firstname;
-    this.lastname = lastname;
-    this.address = address;
-    this.homephone = homephone;
-    this.workphone = workphone;
-    this.mobilephone = mobilephone;
-    this.faxphone = faxphone;
-    this.enail = enail;
-  }
   public String getFirstname() {
     return firstname;
   }
@@ -65,8 +42,8 @@ public class ContactData {
     return faxphone;
   }
 
-  public String getEnail() {
-    return enail;
+  public String getEmail() {
+    return email;
   }
 
   public int getId() {
@@ -96,8 +73,49 @@ public class ContactData {
             '}';
   }
 
-  public void setId(int id) {
+  public ContactData withId(int id) {
     this.id = id;
+    return this;
+  }
+
+  public ContactData withFirstname(String firstname) {
+    this.firstname = firstname;
+    return this;
+  }
+
+  public ContactData withLastname(String lastname) {
+    this.lastname = lastname;
+    return this;
+  }
+
+  public ContactData withAddress(String address) {
+    this.address = address;
+    return this;
+  }
+
+  public ContactData withHomephone(String homephone) {
+    this.homephone = homephone;
+    return this;
+  }
+
+  public ContactData withWorkphone(String workphone) {
+    this.workphone = workphone;
+    return this;
+  }
+
+  public ContactData withMobilephone(String mobilephone) {
+    this.mobilephone = mobilephone;
+    return this;
+  }
+
+  public ContactData withFaxphone(String faxphone) {
+    this.faxphone = faxphone;
+    return this;
+  }
+
+  public ContactData withEmail(String email) {
+    this.email = email;
+    return this;
   }
 
 }
