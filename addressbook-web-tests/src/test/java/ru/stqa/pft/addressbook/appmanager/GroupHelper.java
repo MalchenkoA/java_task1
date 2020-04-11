@@ -13,7 +13,7 @@ public class GroupHelper extends HelperBase {
     super(wd);
   }
   public void returnToGroupPage() {
-    click(By.linkText("Logout"));
+    click(By.linkText("groups"));
   }
 
   public void submitGroupCreation() {
@@ -49,6 +49,13 @@ public class GroupHelper extends HelperBase {
     submitGroupCreation();
   }
 
+  public void modifyGroup(int index, GroupData group) {
+    selectGroup(index);
+    initGroupModification();
+    fillGroupForm(group);
+    submitGroupModification();
+    returnToGroupPage();
+  }
   public boolean isThereAGroup() {
     return isElementPresent(By.name("selected[]"));
   }
