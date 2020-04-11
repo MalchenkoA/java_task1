@@ -6,8 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.ContactData;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static org.openqa.selenium.remote.BrowserType.FIREFOX;
@@ -45,16 +46,17 @@ public class ContactHelper extends HelperBase {
     click(By.linkText("add new"));
   }
 
-  public void selectContact(int index) {
-    wd.findElements(By.name("selected[]")).get(index).click();
+
+  public void selectContactById(int id) {
+    wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
   }
 
   public void deleteSelectedContacts() {
     click(By.xpath("//input[@value='Delete']"));
   }
 
-  public void initContactModification(int index) {
-    wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
+  public void initContactModification(int id) {
+    wd.findElement(By.xpath("//img[@alt='Edit']")).click();
   }
 
   public void submitContactModification() {
@@ -87,16 +89,16 @@ public class ContactHelper extends HelperBase {
 
   }
 
-  public void modify(int index, ContactData contact) {
-    selectContact(index);
-    initContactModification(index);
+  public void modify(ContactData contact) {
+    selectContactById(contact.getId());
+    initContactModification(contact.getId());
     fillContactForm(contact);
     submitContactModification();
     returnToContactPage();
   }
 
-  public void delete(int index) throws InterruptedException {
-    selectContact(index);
+  public void delete(ContactData contact)throws InterruptedException  {
+    selectContactById(contact.getId());
     acceptNextAlert = true;
     deleteSelectedContacts();
     closingTheDialogBox();
@@ -112,17 +114,19 @@ public class ContactHelper extends HelperBase {
     return wd.findElements(By.name("selected[]")).size();
   }
 
-  public List<ContactData> list() {
-    List<ContactData> contacts = new ArrayList<ContactData>();
+
+  public Set<ContactData> all() {
+    Set<ContactData> contacts = new HashSet<ContactData>();
     List<WebElement> elements = wd.findElements(By.xpath("//tr[@name='entry']"));
     for (WebElement element : elements) {
       List<WebElement> cells = element.findElements(By.tagName("td"));
       String firstname = cells.get(2).getText();
       String lastname = cells.get(1).getText();
-     int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
       contacts.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname));
     }
     return contacts;
   }
+
 
 }
