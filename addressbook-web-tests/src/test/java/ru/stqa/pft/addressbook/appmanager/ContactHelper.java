@@ -56,7 +56,7 @@ public class ContactHelper extends HelperBase {
   }
 
   public void initContactModification(int id) {
-    wd.findElement(By.xpath("//img[@alt='Edit']")).click();
+    wd.findElement(By.xpath(String.format("//input[@value='%s']/../../td[8]/a", id))).click();
   }
 
   public void submitContactModification() {
@@ -81,6 +81,19 @@ public class ContactHelper extends HelperBase {
       acceptNextAlert = true;
     }
   }
+  public ContactData infoFormEditForm(ContactData contact){
+    initContactModification(contact.getId());
+    String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
+    String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
+    String address = wd.findElement(By.name("address")).getAttribute("value");
+    String home = wd.findElement(By.name("home")).getAttribute("value");
+    String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
+    String work = wd.findElement(By.name("work")).getAttribute("value");
+    String email = wd.findElement(By.name("email")).getAttribute("value");
+    wd.navigate().back();
+    return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname)
+            .withAddress(address).withHomephone(home).withMobilephone(mobile).withWorkphone(work).withEmail(email);
+  }
 
   public void create(ContactData contact) {
     initContactCreation();
@@ -99,7 +112,7 @@ public class ContactHelper extends HelperBase {
     returnToContactPage();
   }
 
-  public void delete(ContactData contact)throws InterruptedException  {
+  public void delete(ContactData contact) throws InterruptedException {
     selectContactById(contact.getId());
     acceptNextAlert = true;
     deleteSelectedContacts();
@@ -113,7 +126,7 @@ public class ContactHelper extends HelperBase {
     return isElementPresent(By.name("selected[]"));
   }
 
-  public int getContactCount() {
+  public int count() {
     return wd.findElements(By.name("selected[]")).size();
   }
 
@@ -121,7 +134,7 @@ public class ContactHelper extends HelperBase {
   public Contacts contactCache = null;
 
   public Contacts all() {
-    if (contactCache != null){
+    if (contactCache != null) {
       return new Contacts(contactCache);
     }
     contactCache = new Contacts();
@@ -130,8 +143,12 @@ public class ContactHelper extends HelperBase {
       List<WebElement> cells = element.findElements(By.tagName("td"));
       String firstname = cells.get(2).getText();
       String lastname = cells.get(1).getText();
+      String address = cells.get(3).getText();
+      String email = cells.get(4).getText();
+      String allphones = cells.get(5).getText().split("\n");
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      contactCache.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname));
+      contactCache.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname)
+              .withAddress(address).withHomephone(phones[0]).withMobilephone(phones[1]).withWorkphone(phones[2]).withEmail(email));
     }
     return new Contacts(contactCache);
   }
