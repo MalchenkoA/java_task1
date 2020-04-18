@@ -13,5 +13,6 @@ dependencies {
     implementation 'org.testng:testng:7.1.0'
     implementation 'org.seleniumhq.selenium:selenium-java:4.0.0-alpha-5'
     implementation 'org.hamcrest:hamcrest-core:2.2'
+    implementation 'com.beust:jcommander:1.78'
 
 }
