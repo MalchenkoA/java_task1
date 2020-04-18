@@ -40,6 +40,7 @@ public class ContactHelper extends HelperBase {
     type(By.name("mobile"), contactData.getMobilephone());
     type(By.name("fax"), contactData.getFaxphone());
     type(By.name("email"), contactData.getEmail());
+    attech(By.name("photo"), contactData.getPhoto());
   }
 
   public void initContactCreation() {
