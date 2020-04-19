@@ -6,7 +6,8 @@
     "homephone": "homephone 0",
     "workphone": "workphone 0",
     "mobilephone": "mobilephone 0",
-    "email": "email 0"
+    "email": "email 0",
+    "photo": {}
   },
   {
     "firstname": "Mal 1",
@@ -15,7 +16,8 @@
     "homephone": "homephone 1",
     "workphone": "workphone 1",
     "mobilephone": "mobilephone 1",
-    "email": "email 1"
+    "email": "email 1",
+    "photo": {}
   },
   {
     "firstname": "Mal 2",
@@ -24,6 +26,7 @@
     "homephone": "homephone 2",
     "workphone": "workphone 2",
     "mobilephone": "mobilephone 2",
-    "email": "email 2"
+    "email": "email 2",
+    "photo": {}
   }
 ]
