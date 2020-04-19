@@ -56,25 +56,25 @@ public class ContactDataGenerator {
     private void saveAsJson(List<ContactData> contacts, File file) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
         String json = gson.toJson(contacts);
-        Writer writer = new FileWriter(file);
-        writer.write(json);
-        writer.close();
+        try (Writer writer = new FileWriter(file)){
+            writer.write(json);
+        }
     }
 
     private void saveAsXml(List<ContactData> contacts, File file) throws IOException {
         XStream xstream = new XStream();
         xstream.processAnnotations(GroupData.class);
         String xml = xstream.toXML(contacts);
-        Writer writer = new FileWriter(file);
-        writer.write(xml);
-        writer.close();
+        try (Writer writer = new FileWriter(file)){
+            writer.write(xml);
+        }
     }
 
     private void saveAsCsv(List<ContactData> contacts, File file) throws IOException {
         System.out.println(new File(".").getAbsolutePath());
         Writer writer = new FileWriter(file);
         for (ContactData contact :  contacts){
-            writer.write(String.format("%s;%s;%s\n;%s;%s;%s;%s", contact.getLastname(), contact.getFirstname(), contact.getAddress(), contact.getHomephone(), contact.getWorkphone(), contact.getMobilephone(), contact.getEmail(), contact.getPhoto()));
+            writer.write(String.format("%s;%s;%s\n;%s;%s;%s;%s", contact.getLastname(), contact.getFirstname(), contact.getAddress(), contact.getHomephone(), contact.getWorkphone(), contact.getMobilephone(), contact.getEmail()));
         }
         writer.close();
     }
@@ -88,10 +88,7 @@ public class ContactDataGenerator {
                     .withHomephone(String.format("homephone %s", i))
                     .withWorkphone(String.format("workphone %s", i))
                     .withMobilephone(String.format("mobilephone %s", i))
-                    .withEmail(String.format("email %s", i))
-                    .withPhoto(new File("src/test/resources/stru.JPG")));
-
-
+                    .withEmail(String.format("email %s", i)));
         }
         return contacts;
     }
