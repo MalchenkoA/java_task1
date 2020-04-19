@@ -1,7 +1,7 @@
 [
   {
-    "firstname": "Mal 0",
-    "lastname": "Nastya 0",
+    "firstname": "Nastya 0",
+    "lastname": "Mal 0",
     "address": "address 0",
     "homephone": "homephone 0",
     "workphone": "workphone 0",
@@ -10,8 +10,8 @@
     "photo": {}
   },
   {
-    "firstname": "Mal 1",
-    "lastname": "Nastya 1",
+    "firstname": "Nastya 1",
+    "lastname": "Mal 1",
     "address": "address 1",
     "homephone": "homephone 1",
     "workphone": "workphone 1",
@@ -20,8 +20,8 @@
     "photo": {}
   },
   {
-    "firstname": "Mal 2",
-    "lastname": "Nastya 2",
+    "firstname": "Nastya 2",
+    "lastname": "Mal 2",
     "address": "address 2",
     "homephone": "homephone 2",
     "workphone": "workphone 2",

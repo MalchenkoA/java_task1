@@ -74,8 +74,7 @@ public class ContactDataGenerator {
         System.out.println(new File(".").getAbsolutePath());
         Writer writer = new FileWriter(file);
         for (ContactData contact :  contacts){
-            writer.write(String.format("%s;%s;%s\n;%s;%s;%s;%s", contact.getLastname(), contact.getFirstname(), contact.getAddress(), contact.getHomephone(), contact.getWorkphone(), contact.getMobilephone(), contact.getEmail()));
-            String.valueOf(contact.getPhoto());
+            writer.write(String.format("%s;%s;%s\n;%s;%s;%s;%s", contact.getLastname(), contact.getFirstname(), contact.getAddress(), contact.getHomephone(), contact.getWorkphone(), contact.getMobilephone(), contact.getEmail(), contact.getPhoto()));
         }
         writer.close();
     }
@@ -83,14 +82,16 @@ public class ContactDataGenerator {
     private List<ContactData> generateContacts(int count) {
         List<ContactData> contacts = new ArrayList<ContactData>();
         for (int i = 0; i < count; i++){
-            contacts.add(new ContactData().withLastname(String.format("Nastya %s", i))
-                    .withFirstname(String.format("Mal %s", i))
+            contacts.add(new ContactData().withLastname(String.format("Mal %s", i))
+                    .withFirstname(String.format("Nastya %s", i))
                     .withAddress(String.format("address %s", i))
                     .withHomephone(String.format("homephone %s", i))
                     .withWorkphone(String.format("workphone %s", i))
                     .withMobilephone(String.format("mobilephone %s", i))
                     .withEmail(String.format("email %s", i))
                     .withPhoto(new File("src/test/resources/stru.JPG")));
+
+
         }
         return contacts;
     }

@@ -24,8 +24,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ContactCreationTests extends TestBase {
 
   @DataProvider
-  public Iterator<Object[]> validGroupsFromJson() throws IOException {
-    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups.json")));
+  public Iterator<Object[]> validContactsFromJson() throws IOException {
+    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.json")));
     String json = "";
     String line = reader.readLine();
     while (line != null) {
@@ -33,16 +33,14 @@ public class ContactCreationTests extends TestBase {
       line = reader.readLine();
     }
     Gson gson = new Gson();
-    List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>(){}.getType());
-    return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+    List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>(){}.getType());
+    return contacts.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
 
   }
 
-  @Test(dataProvider = "validGroupsFromJson")
-  public void testContactCreation() throws Exception {
+  @Test(dataProvider = "validContactsFromJson")
+  public void testContactCreation(ContactData contact) throws Exception {
     Contacts before = app.contact().all();
-    File photo = new File("src/test/resources/stru.JPG");
-    ContactData contact = new ContactData().withFirstname("Nastya").withLastname("Mal").withPhoto(photo).withAddress("Moscow").withHomephone("123456789").withWorkphone("147852369").withMobilephone("987654321").withFaxphone("963258741").withEmail("test1@test.com");
     app.contact().create(contact);
     app.goTo().contactPage();
     assertThat(app.contact().count(), equalTo(before.size() + 1));
