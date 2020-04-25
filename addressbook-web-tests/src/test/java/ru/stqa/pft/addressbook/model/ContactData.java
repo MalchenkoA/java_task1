@@ -48,8 +48,7 @@ public class ContactData {
   @Column (name = "email2")
   @Type(type = "text")
   private String email2;
-  @Column (name = "photo")
-  @Type(type = "text")
+  @Transient
   private String photo;
   @Column (name = "email3")
   @Type(type = "text")
@@ -123,6 +122,7 @@ public class ContactData {
   public int getId() {
     return id;
   }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -130,12 +130,17 @@ public class ContactData {
     ContactData that = (ContactData) o;
     return id == that.id &&
             Objects.equals(firstname, that.firstname) &&
-            Objects.equals(lastname, that.lastname);
+            Objects.equals(lastname, that.lastname) &&
+            Objects.equals(address, that.address) &&
+            Objects.equals(homephone, that.homephone) &&
+            Objects.equals(workphone, that.workphone) &&
+            Objects.equals(mobilephone, that.mobilephone) &&
+            Objects.equals(email, that.email);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, firstname, lastname);
+    return Objects.hash(id, firstname, lastname, address, homephone, workphone, mobilephone, email);
   }
 
   @Override

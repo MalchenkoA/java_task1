@@ -40,7 +40,6 @@ public class ContactHelper extends HelperBase {
     type(By.name("mobile"), contactData.getMobilephone());
     type(By.name("fax"), contactData.getFaxphone());
     type(By.name("email"), contactData.getEmail());
-    attech(By.name("photo"), contactData.getPhoto());
   }
 
   public void initContactCreation() {
@@ -122,7 +121,7 @@ public class ContactHelper extends HelperBase {
     closingTheDialogBox();
     contactCache = null;
     returnToContactPage();
-    TimeUnit.SECONDS.sleep(5);
+    TimeUnit.SECONDS.sleep(15);
   }
 
   public boolean isThereAContact() {
