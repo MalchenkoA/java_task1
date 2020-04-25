@@ -4,8 +4,13 @@ import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import kotlin.experimental.ExperimentalTypeInference;
+import org.hibernate.annotations.Type;
 import org.intellij.lang.annotations.Identifier;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 
 @XStreamAlias("group")
