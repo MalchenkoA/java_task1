@@ -38,6 +38,7 @@ dependencies {
     implementation 'com.thoughtworks.xstream:xstream:1.4.12'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.walterjwhite.java.dependencies:logback-classic:0.0.17'
+    implementation 'mysql:mysql-connector-java:8.0.19'
 
 }
 
