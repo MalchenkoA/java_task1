@@ -1,5 +1,6 @@
 package ru.stqa.pft.addressbook.appmanager;
 
+import org.hibernate.sql.Select;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -123,6 +124,43 @@ public class ContactHelper extends HelperBase {
     returnToContactPage();
     TimeUnit.SECONDS.sleep(15);
   }
+
+  public void addContact(ContactData contact) {
+    selectContactById(contact.getId());
+    addSelectedContactsToGroup();
+    returnToContactPage();
+     }
+
+  private void addSelectedContactsToGroup() {
+    wd.findElement(By.name("add")).click();
+  }
+
+
+  public void deleteContact(ContactData contact) {
+    findGroup();
+    ChooseGroup();
+    selectContactById(contact.getId());
+    deleteSelectedContactsFromGroup();
+    returnToContactPage();
+    ChooseAllGroups();
+  }
+
+
+  private void findGroup() {
+    wd.findElement(By.name("group")).click();
+  }
+  private void ChooseGroup() {
+    wd.findElement(By.xpath("//option[3]")).click();
+  }
+
+  private void deleteSelectedContactsFromGroup() {
+    wd.findElement(By.name("remove")).click();
+  }
+
+  private void ChooseAllGroups() {
+    wd.findElement(By.xpath("//option[2]")).click();
+  }
+
 
   public boolean isThereAContact() {
     return isElementPresent(By.name("selected[]"));
