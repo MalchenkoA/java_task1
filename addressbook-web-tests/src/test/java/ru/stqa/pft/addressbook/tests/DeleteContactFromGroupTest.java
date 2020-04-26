@@ -24,7 +24,7 @@ public class DeleteContactFromGroupTest extends TestBase{
     }
 
     @Test
-    public void testContactAddedToGroup() throws Exception {
+    public void testDeleteContactFromGroup() throws Exception {
         Contacts before = app.db().contacts();
         ContactData deleteContactFromGroup = before.iterator().next();
         app.goTo().contactPage();
