@@ -5,6 +5,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
@@ -41,7 +42,10 @@ public class ContactHelper extends HelperBase {
     type(By.name("mobile"), contactData.getMobilephone());
     type(By.name("fax"), contactData.getFaxphone());
     type(By.name("email"), contactData.getEmail());
-  }
+
+    }
+
+
 
   public void initContactCreation() {
     click(By.linkText("add new"));
@@ -125,15 +129,21 @@ public class ContactHelper extends HelperBase {
     TimeUnit.SECONDS.sleep(15);
   }
 
-  public void addContact(ContactData contact) {
+  public void addToGroup(ContactData contact) {
     selectContactById(contact.getId());
-    addSelectedContactsToGroup();
-    returnToContactPage();
-     }
-
-  private void addSelectedContactsToGroup() {
-    wd.findElement(By.name("add")).click();
+    click(By.name("add"));
+    click(By.linkText("home"));
   }
+
+  public void deleteFromGroup(ContactData contact) {
+    String to_group = wd.findElement(By.name("to_group")).getText();
+    wd.findElement(By.name("group")).sendKeys(to_group);
+
+    selectContactById(contact.getId());
+    click(By.name("remove"));
+    click(By.linkText("home"));
+  }
+
 
 
   public void deleteContact(ContactData contact) {
