@@ -9,13 +9,11 @@ import org.subethamail.wiser.Wiser;
 import org.subethamail.wiser.WiserMessage;
 import ru.stqa.pft.mantis.model.MailMessage;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 public class MailHelper {
     private ApplicationManager app;
-    private final Wiser wiser;
+    private Wiser wiser;
 
     public MailHelper(ApplicationManager app){
         this.app = app;
@@ -35,7 +33,19 @@ public class MailHelper {
         }
         throw new Error ("No mail :(");
     }
-
+    public List<MailMessage> waitForMail2(int count, long timeout) throws MessagingException, IOException{
+        long start = System.currentTimeMillis();
+        while (System.currentTimeMillis()<start + timeout){
+            if (wiser.getMessages().size()>=count){
+                return wiser.getMessages().stream().map((m) -> toModelMail(m)).collect(Collectors.toList());
+            } try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+        throw new Error ("No mail :(");
+    }
 
     public static MailMessage toModelMail(WiserMessage m){
         try{
@@ -56,5 +66,12 @@ public class MailHelper {
     public void stop() {
         wiser.stop();
     }
+    public void restart() {
+        wiser.stop();
+        wiser = new Wiser();
+        wiser.start();
+
+    }
+
 
 }

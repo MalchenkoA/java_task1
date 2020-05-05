@@ -51,6 +51,6 @@ public class HttpSession {
         CloseableHttpResponse response = httpClient.execute(get);
         String body = getTextFrom(response);
         return body.contains(String.format
-                ("<span class=\"label hidden-xs label-default arrowed\">%s</span>", username));
+                ("<a href=\"/mantisbt-2.24.0/account_page.php\">%s</a>", username));
     }
 }
