@@ -1,0 +1,38 @@
+import com.sun.javafx.runtime.SystemProperties
+
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    useTestNG()
+}
+
+dependencies {
+    implementation 'org.testng:testng:7.1.0'
+    implementation "javax.xml.bind:jaxb-api:2.2.11"
+    implementation "com.sun.xml.bind:jaxb-core:2.2.11"
+    implementation "com.sun.xml.bind:jaxb-impl:2.2.11"
+    implementation "javax.activation:activation:1.1.1"
+}
+
+buildscript{
+    repositories{
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'no.nils:wsdl2java:0.9'
+    }
+}
+
+apply plugin: 'no.nils.wsdl2java'
+
+wsdl2java {
+    wsdlDir = file("src/main/resources") // define to support incremental build
+    wsdlsToGenerate = [   //  2d-array of wsdls and cxf-parameters
+                          ['src/main/resources/geoipservice.wsdl'],
+    ]
+}
