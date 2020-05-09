@@ -17,6 +17,14 @@ public class LoginHelper extends HelperBase {
         click(By.cssSelector("input[type='submit']"));
     }
 
+    public void loginByAdmin() {
+        wd.get(app.getProperty("web.baseUrl") + "/login_page.php");
+        type(By.name("username"), "administrator");
+        click(By.cssSelector("input[type='submit']"));
+        type(By.name("password"), "root");
+        click(By.cssSelector("input[type='submit']"));
+    }
+
     public void reset(String confirmationLink, String password) {
         wd.get(confirmationLink);
         type(By.name("password"), password);
