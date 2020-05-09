@@ -53,7 +53,7 @@ public class ResetPasswordHelper extends HelperBase {
             String username = cells.get(0).getText();
             String email = cells.get(2).getText();
             if (!(username.equals("administrator"))) {
-                UserData user = new UserData().setUsername(username).setEmail(email);
+                UserData user = new UserData().withUsername(username).withEmail(email);
                 users.add(user);
             }
 

@@ -10,7 +10,7 @@ public class UserData {
         return email;
     }
 
-        public UserData setEmail(String email) {
+        public UserData withEmail(String email) {
         this.email = email;
         return this;
     }
@@ -19,7 +19,7 @@ public class UserData {
         return username;
     }
 
-        public UserData setUsername(String username) {
+        public UserData withUsername(String username) {
         this.username = username;
         return this;
     }
@@ -28,7 +28,7 @@ public class UserData {
         return password;
     }
 
-        public UserData setPassword(String password) {
+        public UserData withPassword(String password) {
         this.password = password;
         return this;
     }
