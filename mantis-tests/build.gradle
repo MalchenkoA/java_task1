@@ -35,6 +35,7 @@ dependencies {
     implementation 'ru.lanwen.verbalregex:java-verbal-expressions:1.4'
     implementation 'ch.qos.logback:logback-classic:1.1.5'
     implementation 'mysql:mysql-connector-java:5.1.38'
+    implementation 'biz.futureware.mantis:mantis-axis-soap-client:1.2.19'
 
 
 
