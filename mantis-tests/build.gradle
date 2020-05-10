@@ -36,6 +36,10 @@ dependencies {
     implementation 'ch.qos.logback:logback-classic:1.1.5'
     implementation 'mysql:mysql-connector-java:5.1.38'
     implementation 'biz.futureware.mantis:mantis-axis-soap-client:1.2.19'
+    implementation 'com.google.code.gson:gson:2.6.1'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.1'
+    implementation 'org.apache.httpcomponents:fluent-hc:4.5.1'
+    implementation 'com.jayway.restassured:rest-assured:2.9.0'
 
 
 

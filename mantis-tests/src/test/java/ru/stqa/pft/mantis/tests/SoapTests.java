@@ -6,6 +6,7 @@ import ru.stqa.pft.mantis.model.Issue;
 import ru.stqa.pft.mantis.model.Project;
 
 import javax.xml.rpc.ServiceException;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 import java.util.Set;
@@ -38,6 +39,17 @@ public class SoapTests extends TestBase {
             skipIfNotFixed(0000004);
             System.out.println("test started");
         } catch (SkipException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public void testSkipIfNotFixedRest()  {
+        try {
+            skipIfNotFixedRest(1);
+            System.out.println("test started");
+        } catch (SkipException | IOException e) {
             e.printStackTrace();
         }
 

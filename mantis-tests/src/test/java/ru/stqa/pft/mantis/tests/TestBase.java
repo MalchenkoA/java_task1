@@ -6,11 +6,14 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import ru.stqa.pft.mantis.appmanager.ApplicationManager;
 import ru.stqa.pft.mantis.model.Issue;
+import ru.stqa.pft.mantis.model.IssueStatus;
 
 import javax.xml.rpc.ServiceException;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
+import java.util.Set;
 
 
 public class TestBase {
@@ -41,6 +44,24 @@ public class TestBase {
 
     public void skipIfNotFixed(int issueId) throws RemoteException, ServiceException, MalformedURLException {
         if (isIssueOpen(issueId)) {
+            throw new SkipException("Ignored because of issue " + issueId);
+        }
+    }
+
+
+    public boolean isIssueOpenRest(int issueId) throws IOException {
+        Set<IssueStatus> issueStatus = app.rest().getIssueForBugifyById(issueId);
+        for (IssueStatus status: issueStatus) {
+            if (status.getState_name().equals("resolved") || (status.getState_name().equals("closed"))) {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public void skipIfNotFixedRest(int issueId) throws IOException {
+        if (isIssueOpenRest(issueId)) {
             throw new SkipException("Ignored because of issue " + issueId);
         }
     }
