@@ -50,15 +50,12 @@ public class TestBase {
 
 
     public boolean isIssueOpenRest(int issueId) throws IOException {
-        Set<IssueStatus> issueStatus = app.rest().getIssueForBugifyById(issueId);
-        for (IssueStatus status: issueStatus) {
-            if (status.getState_name().equals("resolved") || (status.getState_name().equals("closed"))) {
+        String issueStatus = app.rest().getIssueForBugifyById(issueId);
+            if (issueStatus.equals("resolved") || (issueStatus.equals("closed"))) {
                 return false;
             }
             return true;
         }
-        return false;
-    }
 
     public void skipIfNotFixedRest(int issueId) throws IOException {
         if (isIssueOpenRest(issueId)) {

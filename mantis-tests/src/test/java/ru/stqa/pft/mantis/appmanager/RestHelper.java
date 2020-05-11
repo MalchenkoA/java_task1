@@ -17,13 +17,15 @@ public class RestHelper{
 public RestHelper(ApplicationManager app) {
         this.app = app;
         }
-    public Set<IssueStatus> getIssueForBugifyById(int issueId) throws IOException {
+    public String getIssueForBugifyById(int issueId) throws IOException {
 
-        String json = getExecutor().execute(Request.Get("https://bugify.stqa.ru/api/issues.json?limit=500"))
+        String json = getExecutor().execute(Request.Get(String.format("https://bugify.stqa.ru/api/issues/%s.json?limit=500", issueId)))
                 .returnContent().asString();;
         JsonElement parsed = new JsonParser().parse(json);
-        JsonElement issues = parsed.getAsJsonObject().get("issues");
-        return new Gson().fromJson(issues, new TypeToken<Set<IssueStatus>>(){}.getType());
+        String status = parsed.getAsJsonObject().getAsJsonArray("issues").get(0).getAsJsonObject().get("state_name").getAsString();
+        return status;
+
+
     }
     private Executor getExecutor() {
         return Executor.newInstance().auth("288f44776e7bec4bf44fdfeb1e646490","");
