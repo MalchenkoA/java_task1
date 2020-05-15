@@ -8,23 +8,22 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static java.util.Objects.isNull;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class AddContactToGroupTest extends TestBase{
+public class AddContactToGroupTest extends TestBase {
 
     @BeforeMethod
-    public void ensurePreconditions(){
-        app.goTo().groupPage();
+    public void ensurePreconditions() {
         if (app.db().groups().size() == 0) {
             app.goTo().groupPage();
             app.group().create(new GroupData().withName("test41"));
         }
-
-        app.goTo().contactPage();
         if (app.db().contacts().size() == 0) {
-            app.goTo().contactPage();
             app.contact().create(new ContactData().withFirstname("Nastya")
                     .withLastname("Mal").withAddress("Moscow")
                     .withHomephone("123456789").withWorkphone("147852369")
@@ -36,84 +35,41 @@ public class AddContactToGroupTest extends TestBase{
 
     @Test
     public void testContactAddedToGroup() throws Exception {
-        //Contacts beforeContacts = app.db().contacts();
-        //Groups beforeGroups = app.db().groups();
-        ContactData addContactToGroup = null;
-        GroupData groupToAdd = null;
 
-        while (isNull(addContactToGroup)) {
-            for (ContactData contact : app.db().contacts()) {
-                for (GroupData group : app.db().groups()) {
+        ContactData contactToTest = selectAvailableContact();
+        GroupData groupToTest = selectAvailableGroup(contactToTest);
 
-                    for (ContactData contactInGroup : group.getContacts()) {
-                        if (contactInGroup == contact) {
-                            break;
-                        }
-                    }
+        Groups groupsForContactBefore = app.db().contactById(contactToTest.getId()).getGroups();
 
-                    groupToAdd = group;
-                }
-                addContactToGroup = contact;
-            }
+        app.goTo().contactPage();
+        app.contact().addContactToGroup(contactToTest, groupToTest);
 
-        //ContactData addContactToGroup = beforeContacts.iterator().next();
-        //GroupData groupToAdd = beforeGroups.iterator().next();
-            if (isNull(groupToAdd)) {
-                app.goTo().groupPage();
-                app.group().create(new GroupData().withName("test41"));
-            }
+        Groups groupsForContactAfter = app.db().contactById(contactToTest.getId()).getGroups();
 
-            if (isNull(addContactToGroup)) {
-                app.goTo().contactPage();
-                app.contact().create(new ContactData().withFirstname("Nastya")
-                        .withLastname("Mal").withAddress("Moscow")
-                        .withHomephone("123456789").withWorkphone("147852369")
-                        .withMobilephone("987654321").withFaxphone("963258741")
-                        .withEmail("test1@test.com"));
-            }
-        }
-
-        app.contact().addToGroup(addContactToGroup);
-        addContactToGroup.inGroup(groupToAdd);
-
-        Assert.assertTrue(addContactToGroup.getGroups().size() > 0);
-
-
-        ContactData addNewContactToGroup = null;
-        while (isNull(addNewContactToGroup)) {
-           for (ContactData contact : app.db().contacts()) {
-               if (contact.getGroups().size() == 0) {
-                   addNewContactToGroup = contact;
-                    break;
-                }
-            }
-            if (isNull(addNewContactToGroup)) {
-                app.goTo().contactPage();
-                app.contact().create(new ContactData().withFirstname("Nastya")
-                        .withLastname("Mal").withAddress("Moscow")
-                        .withHomephone("123456789").withWorkphone("147852369")
-                        .withMobilephone("987654321").withFaxphone("963258741")
-                        .withEmail("test1@test.com"));
-            }
-            if (isNull(groupToAdd)) {
-                app.goTo().groupPage();
-                app.group().create(new GroupData().withName("test41"));
-            }
-        }
-        Groups beforeGroups = app.db().groups();
-        GroupData groupNewToAdd = beforeGroups.iterator().next(); // вернет группу, в которую будем добавлять (любую)
-        app.contact().addToGroup(addNewContactToGroup);
-        addNewContactToGroup.inGroup(groupNewToAdd);
-        Assert.assertTrue(addNewContactToGroup.getGroups().size() > 0);
-
-
-
-        //Contacts after = app.db().contacts();
-        //Assert.assertEquals(after.size(),beforeContacts.size());
-
-        //assertThat(after, equalTo(beforeContacts.withOut(addContactToGroup).withAdded(addContactToGroup)));
-
-
+        assertThat(groupsForContactAfter.size(), equalTo(groupsForContactBefore.size() + 1));
+        assertThat(groupsForContactAfter, equalTo(groupsForContactBefore.withAdded(app.db().groupByName(groupToTest.getName()))));
     }
 
+    public ContactData selectAvailableContact() {
+        Contacts contacts = app.db().contacts();
+        Groups groups = app.db().groups();
+        for (ContactData contact : contacts) {
+            if (contact.getGroups().size() < groups.size()) {
+                return contact;
+            }
+        }
+        app.goTo().contactPage();
+        app.contact().create(new ContactData().withFirstname("Nastya").withLastname("Mal99").withAddress("Moscow").withHomephone("123456789").withEmail("test1@test.com"));
+        Contacts newContact = app.db().contacts();
+        return app.db().contactById(newContact.stream().mapToInt((c) -> c.getId()).max().getAsInt());
+    }
+
+    private GroupData selectAvailableGroup(ContactData contact) {
+        Groups groups = app.db().groups();
+        Groups contactGroups = contact.getGroups();
+        for (GroupData group : contactGroups) {
+            groups.remove(group);
+        }
+        return groups.iterator().next();
+    }
 }
