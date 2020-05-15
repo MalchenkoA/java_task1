@@ -13,6 +13,7 @@ import static org.testng.Assert.assertTrue;
 
 public class DeleteContactFromGroupTest extends TestBase {
 
+
     @BeforeMethod
     public void ensurePreconditions() {
         if (app.db().groups().size() == 0) {
@@ -29,6 +30,7 @@ public class DeleteContactFromGroupTest extends TestBase {
         }
 
     }
+
 
     @Test
     public void testDeleteContactFromGroup() throws Exception {
@@ -57,9 +59,10 @@ public class DeleteContactFromGroupTest extends TestBase {
             }
         }
         GroupData groupWithContact = groups.iterator().next();
-          app.contact().addContactToGroup(contacts.iterator().next(), groupWithContact);
-          app.goTo().contactPage();
-          return groupWithContact;
+        app.contact().addContactToGroup(contacts.iterator().next(), groupWithContact);
+        app.goTo().contactPage();
+        return groupWithContact;
     }
+
 }
 

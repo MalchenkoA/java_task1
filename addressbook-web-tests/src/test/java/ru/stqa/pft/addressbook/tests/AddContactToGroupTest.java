@@ -17,6 +17,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class AddContactToGroupTest extends TestBase {
 
+
     @BeforeMethod
     public void ensurePreconditions() {
         if (app.db().groups().size() == 0) {
@@ -32,6 +33,7 @@ public class AddContactToGroupTest extends TestBase {
         }
 
     }
+
 
     @Test
     public void testContactAddedToGroup() throws Exception {
